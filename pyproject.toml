@@ -1,0 +1,43 @@
+[tool.poetry]
+name = "concoction"
+version = "0.1.0"
+description = "Library to inject configurations"
+authors = ["soapun"]
+license = "MIT"
+readme = "README.md"
+packages = [{ include = "concoction" }]
+homepage = "https://github.com/soapun/concoction"
+repository = "https://github.com/soapun/concoction"
+keywords = ["python", "config", "configuration", "settings", "injection", "injector", "configuration-management"]
+classifiers = [
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+
+[tool.poetry.dependencies]
+python = ">=3.8,<4"
+python-benedict = "^0.33.2"
+pydantic = ">2"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.4.2"
+ruff = "^0.5.0"
+pytest = "^6.2.3"
+pytest-cov = "^5.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 79
