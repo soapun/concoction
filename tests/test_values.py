@@ -10,14 +10,7 @@ from concoction.values.pydantic import Value as ValuePydantic
 
 @pytest.fixture(scope="module", autouse=True)
 def global_config():
-    config = {
-        "app": {
-            "service": {
-                "name": "test",
-                "workers": "4"
-            }
-        }
-    }
+    config = {"app": {"service": {"name": "test", "workers": "4"}}}
     set_global_config(config)
     yield
     set_global_config({})

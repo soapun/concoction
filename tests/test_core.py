@@ -8,15 +8,11 @@ from concoction.core import set_global_config, Configuration
 def global_config():
     config = {
         "app": {
-            "service": {
-                "name": "test",
-                "version": "0.0.0",
-                "workers": "4"
-            },
+            "service": {"name": "test", "version": "0.0.0", "workers": "4"},
             "db": {
                 "connection": "test",
                 "user": "admin",
-            }
+            },
         }
     }
     set_global_config(config)
