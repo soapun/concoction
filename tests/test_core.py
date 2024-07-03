@@ -1,3 +1,5 @@
+import inspect
+
 import pytest
 from pydantic import BaseModel
 
@@ -44,6 +46,10 @@ def test_no_args():
     assert service_config.name == "test"
     assert service_config.version == "0.0.0"
     assert service_config.workers == 4
+
+
+def test_correct_decorating():
+    assert inspect.isclass(ServiceConfig)
 
 
 def test_args():

@@ -30,8 +30,10 @@ class Configuration:
         self.prefix = prefix
 
     def __call__(self, cls):
-        @wraps(cls)
-        def wrapper(*args, **kwargs):
+        original_init = cls.__init__
+
+        @wraps(cls.__init__)
+        def wrapper(_self, *args, **kwargs):
             if not args and not kwargs:
                 config_section = global_config.get(self.prefix, {})
                 if not config_section:
@@ -44,6 +46,7 @@ class Configuration:
                         stacklevel=2,
                     )
                 kwargs.update(config_section)
-            return cls(*args, **kwargs)
+            return original_init(_self, *args, **kwargs)
 
-        return wrapper
+        cls.__init__ = wrapper
+        return cls
