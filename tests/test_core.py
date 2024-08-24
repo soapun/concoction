@@ -40,6 +40,49 @@ class MissingConfig(BaseModel):
     name: str = "default"
 
 
+def test_registered_classes():
+    assert Configuration.prefix_to_class == {
+        "app.service": ServiceConfig,
+        "app.db": DbConfig,
+        "app.missing": MissingConfig,
+    }
+
+
+def test_post_init_hooks():
+    x = 0
+
+    def hook(*args, **kwargs):
+        nonlocal x
+        x = 1
+
+    Configuration.post_init_hooks.append(hook)
+    ServiceConfig()
+    assert x == 1
+    Configuration.post_init_hooks = []
+
+
+def test_require_unique_prefixes():
+    with pytest.raises(KeyError):
+
+        @Configuration("app.service")
+        class SecondServiceConfig:  # noqa
+            name: str = "default"
+            version: str = "default"
+            workers: int = 1
+
+    Configuration.require_unique_prefixes = False
+
+    with pytest.warns(UserWarning):
+
+        @Configuration("app.service")
+        class ThirdServiceConfig:  # noqa
+            name: str = "default"
+            version: str = "default"
+            workers: int = 1
+
+    Configuration.require_unique_prefixes = True
+
+
 def test_no_args():
     service_config = ServiceConfig()
 
