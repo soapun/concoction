@@ -119,3 +119,37 @@ def test_missing_prefix():
     with pytest.warns(UserWarning):
         missing_config = MissingConfig()
         assert missing_config.name == "default"
+
+
+def test_parent_merging():
+    parent_prefix = "app.parent"
+    child_prefix = "app.child"
+
+    set_global_config(
+        {
+            "app": {
+                "parent": {
+                    "base_only": "base",
+                    "both": "base",
+                },
+                "child": {
+                    "child_only": "derived",
+                    "both": "derived",
+                },
+            }
+        }
+    )
+
+    @Configuration(parent_prefix)
+    class ParentConfig(BaseModel):
+        base_only: str
+        both: str
+
+    @Configuration(child_prefix, merge_parents=True)
+    class ChildConfig(ParentConfig):
+        child_only: str
+
+    child = ChildConfig()
+    assert child.base_only == "base"
+    assert child.child_only == "derived"
+    assert child.both == "derived"

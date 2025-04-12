@@ -16,6 +16,7 @@ experience for Python developers.
 - **Flexibility with Plain Dictionaries**: Simple and flexible configuration management using plain dictionaries.
 - **Injecting Whole Configuration Blocks**: Inject entire configuration blocks for modular and decoupled settings.
 - **Injecting Individual Fields**: Granular control with the ability to inject specific configuration fields.
+- **Merging Parent Configurations**: Option to bind inherited configuration fields to parent configuration block
 
 ## Installation
 
@@ -36,7 +37,7 @@ app:
     port: 8000
 ```
 
-and injecting `service` section into our config
+and injecting `service` block into our config
 
 ```python
 import yaml  # pip install pyyaml
